@@ -1,11 +1,19 @@
+import json
 import os
 import sys
 import urllib
 
 
-def create_folder(folder):
-    if not os.path.exists(folder):
-        os.mkdir(folder)
+def create_folder(filename):
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+
+def is_json(myjson):
+    try:
+        json.loads(myjson)
+    except ValueError as e:
+        return False
+    return True
 
 
 # takes a url and downloads image from that url
@@ -31,7 +39,7 @@ def image_downloader(img_links, folder_name):
             img_name = "None"
 
             if link != "None":
-                img_name = (link.split(".jpg")[0]).split("/")[-1] + ".jpg"
+                img_name = link.split("/")[-1]
                 try:
                     urllib.request.urlretrieve(link, img_name)
                 except Exception:
@@ -44,6 +52,5 @@ def image_downloader(img_links, folder_name):
     finally:
         os.chdir(parent)
     return img_names
-
 
 # -------------------------------------------------------------

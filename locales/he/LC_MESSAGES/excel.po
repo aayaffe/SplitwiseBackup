@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2021-09-06 17:50+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: excel.py:23 excel.py:49
+msgid "%d/%m/%Y"
+msgstr ""
+
+#: excel.py:49
+msgid "Expenses "
+msgstr "הוצאות "
+
+#: excel.py:78
+msgid "Paid"
+msgstr "שילם"
+
+#: excel.py:79
+msgid "Owed"
+msgstr "חייב"
+
+#: excel.py:80
+msgid "Date"
+msgstr "תאריך"
+
+#: excel.py:81
+msgid "Description"
+msgstr "תיאור"
+
+#: excel.py:82
+msgid "Amount"
+msgstr "סכום"
+
+#: excel.py:108
+msgid "Sum"
+msgstr 'סה"כ'
+
+#: excel.py:109
+msgid "Bottom line: Debt(+)/Owed(-)"
+msgstr "שורה תחתונה: חובה (+), זכות (-)"
+
