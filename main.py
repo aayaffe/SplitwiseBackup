@@ -4,6 +4,7 @@ import config
 import utils
 from excel import generate_expenses_xlsx
 
+
 s = Splitwise(config.consumer_key, config.consumer_secret,
               api_key=config.API_key)
 utils.create_folder(config.json_filename)
