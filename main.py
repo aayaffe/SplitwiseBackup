@@ -70,4 +70,4 @@ with open(config.json_filename, 'w', encoding='utf-8') as outfile:
 
 generate_expenses_xlsx(config.xlsx_filename, config.json_filename)
 
-# json2csv('export/expenses.json', 'export/out.csv')
+# json2csv(config.json_filename, 'export/out.csv')
