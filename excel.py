@@ -4,6 +4,7 @@ from _datetime import datetime
 from xlsxwriter.utility import xl_rowcol_to_cell
 
 import config
+import utils
 from utils import create_folder
 import xlsxwriter
 import dateutil.parser
@@ -23,8 +24,7 @@ def json2dict(jsonfile):
             continue
         i = expense['id']
         ret[i] = {}
-        d = dateutil.parser.isoparse(expense['date'])
-        ret[i]['date'] = d.strftime(_("%d/%m/%Y"))
+        ret[i]['date'] = utils.to_simple_local_date_string(expense['date'])
         ret[i]['description'] = expense['description']
         ret[i]['cost'] = expense['cost']
         users_dict = {}
@@ -45,6 +45,20 @@ def json2usersdict(jsonfile):
     j = json.load(io.open(jsonfile, 'r', encoding='utf-8-sig'))
     ret = {x['id']: x['first_name'] for x in j['members']}
     return ret
+
+
+def add_debt_ConditionalFormat(worksheet, cell, c_format):
+    worksheet.conditional_format(cell, {'type': 'cell',
+                                        'criteria': '>=',
+                                        'value': 0,
+                                        'format': c_format})
+
+
+def add_owed_ConditionalFormat(worksheet, cell, c_format):
+    worksheet.conditional_format(cell, {'type': 'cell',
+                                        'criteria': '<',
+                                        'value': 0,
+                                        'format': c_format})
 
 
 def generate_expenses_xlsx(filename, jsonfile):
@@ -69,11 +83,21 @@ def generate_expenses_xlsx(filename, jsonfile):
         'border': 1,
         'valign': 'vcenter'
     })
-    currency_format_bold = workbook.add_format({
+    currency_format_bold_minus = workbook.add_format({
         'num_format': '₪#,##0.0',
         'border': 1,
         'valign': 'vcenter',
-        'bold': 1
+        'bold': 1,
+        'bg_color': '#FFC7CE',
+        'font_color': '#9C0006'
+    })
+    currency_format_bold_plus = workbook.add_format({
+        'num_format': '₪#,##0.0',
+        'border': 1,
+        'valign': 'vcenter',
+        'bold': 1,
+        'bg_color': '#C6EFCE',
+        'font_color': '#006100'
     })
 
     user_dict = json2usersdict(jsonfile)
@@ -115,13 +139,19 @@ def generate_expenses_xlsx(filename, jsonfile):
         bottomcell4 = xl_rowcol_to_cell(cur_row, 4 + i * 2)
         worksheet.write_formula(cur_row, 3 + i * 2, '=SUM(' + topcell1 + ':' + bottomcell1 + ')', currency_format)
         worksheet.write_formula(cur_row, 4 + i * 2, '=SUM(' + topcell2 + ':' + bottomcell2 + ')', currency_format)
-        worksheet.write_formula(cur_row + 1, 4 + i * 2, '=' + bottomcell4 + ' - ' + bottomcell3, currency_format_bold)
-    worksheet.merge_range(cur_row, 0, cur_row, 2, _('Sum'), merge_format)
-    worksheet.merge_range(cur_row + 1, 0, cur_row + 1, 2, _('Bottom line: Debt(+)/Owed(-)'), merge_format)
+        worksheet.write_formula(cur_row + 1, 4 + i * 2, '=' + bottomcell4 + ' - ' + bottomcell3, currency_format)
+        add_owed_ConditionalFormat(worksheet, xl_rowcol_to_cell(cur_row + 1, 4 + i * 2), currency_format_bold_plus)
+        add_debt_ConditionalFormat(worksheet, xl_rowcol_to_cell(cur_row + 1, 4 + i * 2), currency_format_bold_minus)
 
-    worksheet.set_column(0, 0, 9)
+    worksheet.write_formula(cur_row, 2,
+                            '=SUM(' + xl_rowcol_to_cell(3, 2) + ':' + xl_rowcol_to_cell(cur_row - 1, 2) + ')',
+                            currency_format)
+    worksheet.merge_range(cur_row, 0, cur_row, 1, _('Sum'), merge_format)
+    worksheet.merge_range(cur_row + 1, 0, cur_row + 1, 1, _('Bottom line: Debt(+)/Owed(-)'), merge_format)
+
+    worksheet.set_column(0, 0, 10)
     worksheet.set_column(1, 1, 50)
-    worksheet.set_column(2, 2 + len(user_dict)*2, 7)
+    worksheet.set_column(2, 2 + len(user_dict) * 2, 10)
 
     worksheet.set_landscape()
     worksheet.set_paper(9)

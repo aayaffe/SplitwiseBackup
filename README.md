@@ -13,6 +13,8 @@ pip install -r requirements.txt
 ```
 edit config.py file according to config-TEMPLATE.py file
 
+For input to work in pycharm set the `Emulate terminal in output console` to true in the run configuration
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
