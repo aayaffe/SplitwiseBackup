@@ -3,9 +3,17 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <sourceFolder url="file://$MODULE_DIR$/splitwise" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/export" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.8 (SplitwiseExporter)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="PyNamespacePackagesService">
+    <option name="namespacePackageFolders">
+      <list>
+        <option value="$MODULE_DIR$/splitwise" />
+      </list>
+    </option>
   </component>
 </module>

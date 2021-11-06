@@ -5,7 +5,8 @@ import sys
 import urllib
 import dateutil
 import prompt_toolkit
-from prompt_toolkit.completion import WordCompleter
+from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+from prompt_toolkit.completion import WordCompleter, FuzzyWordCompleter
 from prompt_toolkit.validation import ValidationError, Validator
 
 import config
@@ -65,10 +66,14 @@ class YNValidator(Validator):
 
 def default_input(prompt, default, options=[], ignore_case=False, retry=False):
     if options:
-        completer = WordCompleter(options)
+        completer = FuzzyWordCompleter(options)
         return prompt_toolkit.prompt(prompt, default=default, completer=completer, complete_while_typing=True,
                                      validator=YNValidator(options))
     return prompt_toolkit.prompt(prompt, default=default)
+
+
+def session_input(prompt, session, default):
+    return session.prompt(prompt, default=default, auto_suggest=AutoSuggestFromHistory())
 
 
 # takes a url and downloads image from that url
