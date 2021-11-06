@@ -39,9 +39,21 @@ msgstr "תאריך"
 msgid "Description"
 msgstr "תיאור"
 
+#: excel.py:118
+msgid "Upgrade?"
+msgstr "שדרוג?"
+
 #: excel.py:82
 msgid "Amount"
 msgstr "סכום"
+
+#: excel.py:128
+msgid "No"
+msgstr "לא"
+
+#: excel.py:128
+msgid "Yes"
+msgstr "כן"
 
 #: excel.py:108
 msgid "Sum"

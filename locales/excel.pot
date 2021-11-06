@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-09-06 17:50+0300\n"
+"POT-Creation-Date: 2021-11-06 19:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,39 +15,51 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: excel.py:23 excel.py:49
-msgid "%d/%m/%Y"
-msgstr ""
-
-#: excel.py:49
+#: excel.py:68
 msgid "Expenses "
 msgstr ""
 
-#: excel.py:78
+#: excel.py:108
+msgid "%d/%m/%Y"
+msgstr ""
+
+#: excel.py:114
 msgid "Paid"
 msgstr ""
 
-#: excel.py:79
+#: excel.py:115
 msgid "Owed"
 msgstr ""
 
-#: excel.py:80
+#: excel.py:116
 msgid "Date"
 msgstr ""
 
-#: excel.py:81
+#: excel.py:117
 msgid "Description"
 msgstr ""
 
-#: excel.py:82
+#: excel.py:118
+msgid "Upgrade?"
+msgstr ""
+
+#: excel.py:119
 msgid "Amount"
 msgstr ""
 
-#: excel.py:108
+#: excel.py:129
+msgid "Yes"
+msgstr ""
+
+#: excel.py:129 excel.py:131
+msgid "No"
+msgstr ""
+
+#: excel.py:158
 msgid "Sum"
 msgstr ""
 
-#: excel.py:109
+#: excel.py:159
 msgid "Bottom line: Debt(+)/Owed(-)"
 msgstr ""
 

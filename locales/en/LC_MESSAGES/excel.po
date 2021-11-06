@@ -39,8 +39,20 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
+#: excel.py:118
+msgid "Upgrade?"
+msgstr ""
+
 #: excel.py:82
 msgid "Amount"
+msgstr ""
+
+#: excel.py:128
+msgid "No"
+msgstr ""
+
+#: excel.py:128
+msgid "Yes"
 msgstr ""
 
 #: excel.py:108
