@@ -14,24 +14,28 @@ members_json = group.__dict__['members']
 members_array = json.loads(
         json.dumps(members_json, default=lambda o: o.__dict__, ensure_ascii=False))
 
-expenses_array = []
-for expense in expenses:
-    comments = s.getComments(expense.id)
-    js = json.loads(
-        json.dumps(expense.__dict__, default=lambda o: o.__dict__, ensure_ascii=False))
-    js['comments'] = json.loads(
-            json.dumps(comments, default=lambda o: o.__dict__, ensure_ascii=False))
-    if expense.receipt.original and config.download_images_pdf:
-        utils.image_downloader([expense.receipt.original], config.receipts_dir)
-    print(js)
-    expenses_array.append(js)
-json_out = {'expenses': expenses_array, 'members': members_array}
-with open(config.json_filename, 'w', encoding='utf-8') as outfile:
-    json.dump(json_out, outfile, ensure_ascii=False, indent=4)
 
-# generate_expenses_xlsx(config.xlsx_filename, config.json_filename)
+def expenses_to_json(expenses):
+    expenses_array = []
+    for expense in expenses:
+        comments = s.getComments(expense.id)
+        js = json.loads(
+            json.dumps(expense.__dict__, default=lambda o: o.__dict__, ensure_ascii=False))
+        js['comments'] = json.loads(
+                json.dumps(comments, default=lambda o: o.__dict__, ensure_ascii=False))
+        if expense.receipt.original and config.download_images_pdf:
+            utils.image_downloader([expense.receipt.original], config.receipts_dir)
+        print(js)
+        expenses_array.append(js)
+    json_out = {'expenses': expenses_array, 'members': members_array}
+    with open(config.json_filename, 'w', encoding='utf-8') as outfile:
+        json.dump(json_out, outfile, ensure_ascii=False, indent=4)
 
 
-# new_expenses = yacht_expense_details.review_all_expenses(config.json_filename)
+expenses_to_json(expenses)
+generate_expenses_xlsx(config.xlsx_filename, config.json_filename)
+
+
+# new_expenses = yacht_expense_details.review_all_expenses(expenses)
 
 # json2csv(config.json_filename, 'export/out.csv')
