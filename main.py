@@ -24,7 +24,7 @@ def expenses_to_json(expenses):
         js['comments'] = json.loads(
                 json.dumps(comments, default=lambda o: o.__dict__, ensure_ascii=False))
         if expense.receipt.original and config.download_images_pdf:
-            utils.image_downloader([expense.receipt.original], config.receipts_dir)
+            utils.image_downloader([expense.receipt.original], config.receipts_dir, overwrite=False)
         print(js)
         expenses_array.append(js)
     json_out = {'expenses': expenses_array, 'members': members_array}
@@ -32,7 +32,7 @@ def expenses_to_json(expenses):
         json.dump(json_out, outfile, ensure_ascii=False, indent=4)
 
 
-expenses_to_json(expenses)
+# expenses_to_json(expenses)
 generate_expenses_xlsx(config.xlsx_filename, config.json_filename)
 
 

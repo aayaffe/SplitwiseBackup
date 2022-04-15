@@ -3,6 +3,8 @@ import json
 import os
 import sys
 import urllib
+from pathlib import Path
+
 import dateutil
 import prompt_toolkit
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
@@ -77,11 +79,12 @@ def session_input(prompt, session, default):
 
 
 # takes a url and downloads image from that url
-def image_downloader(img_links, folder_name):
+def image_downloader(img_links, folder_name, overwrite=True):
     """
     Download images from a list of image urls.
     :param img_links:
     :param folder_name:
+    :param overwrite: if True, overwrite existing files
     :return: list of image names downloaded
     """
     img_names = []
@@ -101,7 +104,9 @@ def image_downloader(img_links, folder_name):
             if link != "None":
                 img_name = link.split("/")[-1]
                 try:
-                    urllib.request.urlretrieve(link, img_name)
+                    img_file = Path(folder + "/" + img_name)
+                    if not img_file.is_file() or overwrite:
+                        urllib.request.urlretrieve(link, img_name)
                 except Exception:
                     img_name = "None"
 

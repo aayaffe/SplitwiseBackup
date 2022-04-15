@@ -28,7 +28,7 @@ i.e.
 py C:\Users\<username>\AppData\Local\Programs\Python\Python38-32\Tools\i18n\pygettext.py -d excel -o locales/excel.pot excel.py
 ```
 
-Than translate the string in the po files and run msgfmt to create the mo files:
+Then translate the string in the po files and run msgfmt to create the mo files:
 ```commandline
 py <Location of python directory>\Tools\i18n\msgfmt.py -o <namespace>.mo <namespace>
 ```
