@@ -26,7 +26,7 @@ def json2dict(jsonfile):
         ret[i] = {}
         ret[i]['date'] = utils.to_simple_local_date_string(expense['date'])
         ret[i]['description'] = expense['description']
-        ret[i]['cost'] = expense['cost']
+        ret[i]['cost'] = -1 * float(expense['cost']) if expense['creation_method'] == 'reimbursement' else float(expense['cost'])
         ret[i]['details'] = expense['details']
         ret[i]['receipt'] = expense['receipt']['original']
         users_dict = {}

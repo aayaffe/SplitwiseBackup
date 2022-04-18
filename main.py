@@ -32,10 +32,8 @@ def expenses_to_json(expenses):
         json.dump(json_out, outfile, ensure_ascii=False, indent=4)
 
 
-# expenses_to_json(expenses)
+expenses_to_json(expenses)
 generate_expenses_xlsx(config.xlsx_filename, config.json_filename)
-
-
-# new_expenses = yacht_expense_details.review_all_expenses(expenses)
+yacht_expense_details.review_all_expenses(expenses)
 
 # json2csv(config.json_filename, 'export/out.csv')
