@@ -71,6 +71,11 @@ def generate_expenses_xlsx(filename, jsonfile):
     cell_format = workbook.add_format({
         'border': 1,
         'valign': 'vcenter'})
+    url_cell_format = workbook.add_format({
+        'border': 1,
+        'valign': 'vcenter',
+        'underline': 1,
+        'font_color': 'blue'})
     bold_format = workbook.add_format({
         'bold': 1,
         'border': 1,
@@ -120,8 +125,6 @@ def generate_expenses_xlsx(filename, jsonfile):
     worksheet.merge_range(cur_row, 3, cur_row + 1, 3, _('Receipt'), merge_format)
     worksheet.merge_range(cur_row, 4, cur_row + 1, 4, _('Amount'), merge_format)
 
-
-
     cur_row += 1
     for expense in expense_dict:
         cur_row += 1
@@ -133,7 +136,13 @@ def generate_expenses_xlsx(filename, jsonfile):
         except Exception:
             upgrade = _('No')
         worksheet.write(cur_row, 2, upgrade, cell_format)
-        worksheet.write(cur_row, 3, _('Yes') if expense_dict[expense]['receipt'] else _('No'), cell_format)
+        link = expense_dict[expense]['receipt'] if expense_dict[expense]['receipt'] else ''
+        if link:
+            link = "receipts\\" + link.split("/")[-1:][0]
+            worksheet.write_url(cur_row, 3, link, string=_('Yes') if expense_dict[expense]['receipt'] else _('No'),
+                                cell_format=url_cell_format)
+        else:
+            worksheet.write(cur_row, 3, _('Yes') if expense_dict[expense]['receipt'] else _('No'), cell_format)
         worksheet.write_number(cur_row, 4, float(expense_dict[expense]['cost']), currency_format)
 
         for i, user in enumerate(expense_dict[expense]['users']):
