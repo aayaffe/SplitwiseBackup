@@ -29,6 +29,8 @@ def json2dict(jsonfile):
         ret[i]['cost'] = -1 * float(expense['cost']) if expense['creation_method'] == 'reimbursement' else float(expense['cost'])
         ret[i]['details'] = expense['details']
         ret[i]['receipt'] = expense['receipt']['original']
+        if 'filename' in expense:
+            ret[i]['filename'] = expense['filename']
         users_dict = {}
         for ID, name in users.items():
             users_dict[ID] = {}
@@ -136,10 +138,17 @@ def generate_expenses_xlsx(filename, jsonfile):
         except Exception:
             upgrade = _('No')
         worksheet.write(cur_row, 2, upgrade, cell_format)
-        link = expense_dict[expense]['receipt'] if expense_dict[expense]['receipt'] else ''
-        if link:
-            link = "receipts\\" + link.split("/")[-1:][0]
-            worksheet.write_url(cur_row, 3, link, string=_('Yes') if expense_dict[expense]['receipt'] else _('No'),
+        receipt_file = ''
+        if 'filename' in expense_dict[expense]:
+            receipt_file = expense_dict[expense]['filename']
+            filename = receipt_file
+        else:
+            link = expense_dict[expense]['receipt'] if expense_dict[expense]['receipt'] else ''
+            if link:
+                filename = utils.get_file_from_url(link)
+                receipt_file = "receipts\\" + filename
+        if receipt_file:
+            worksheet.write_url(cur_row, 3, receipt_file, string=filename,
                                 cell_format=url_cell_format)
         else:
             worksheet.write(cur_row, 3, _('Yes') if expense_dict[expense]['receipt'] else _('No'), cell_format)

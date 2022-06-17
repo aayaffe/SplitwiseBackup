@@ -1,6 +1,7 @@
 import gettext
 import json
 import os
+import shutil
 import sys
 import urllib
 from pathlib import Path
@@ -78,7 +79,6 @@ def session_input(prompt, session, default):
     return session.prompt(prompt, default=default, auto_suggest=AutoSuggestFromHistory())
 
 
-# takes a url and downloads image from that url
 def image_downloader(img_links, folder_name, overwrite=True):
     """
     Download images from a list of image urls.
@@ -118,4 +118,35 @@ def image_downloader(img_links, folder_name, overwrite=True):
         os.chdir(parent)
     return img_names
 
-# -------------------------------------------------------------
+
+def file_copy_rename(src, dst_dir, new_name=''):
+    """
+    Copy a file and rename it.
+    :param src: src file path
+    :param dst_dir: destination directory
+    :param new_name: new file name (without extension)
+    :return: None
+    """
+    filename = os.path.basename(src)
+    extension = get_extension(src)
+    try:
+        create_folder(dst_dir)
+    except Exception:
+        print("Error in creating target directory.")
+
+    if new_name == '':
+        dst = os.path.join(os.path.dirname(dst_dir), filename)
+    else:
+        dst = os.path.join(os.path.dirname(dst_dir), new_name) + extension
+    try:
+        shutil.copy(src, dst)
+    except Exception:
+        print("Exception (file_copy_rename):", sys.exc_info()[0])
+
+
+def get_file_from_url(url):
+    return url.split("/")[-1:][0]
+
+
+def get_extension(filename):
+    return os.path.splitext(filename)[1]

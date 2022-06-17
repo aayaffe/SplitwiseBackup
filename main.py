@@ -1,4 +1,6 @@
 import json
+
+import converter
 from splitwise import Splitwise
 import config
 import utils
@@ -35,5 +37,9 @@ def expenses_to_json(expenses):
 expenses_to_json(expenses)
 generate_expenses_xlsx(config.xlsx_filename, config.json_filename)
 yacht_expense_details.review_all_expenses(expenses)
+
+# converter.convert_file_names(config.json_filename, 'export/converted/expenses.json', prefix='receipt_')
+# generate_expenses_xlsx('export/converted/expenses.xlsx', 'export/converted/expenses.json')
+
 
 # json2csv(config.json_filename, 'export/out.csv')
