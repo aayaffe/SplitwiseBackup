@@ -125,7 +125,7 @@ def generate_expenses_xlsx(filename, jsonfile):
     worksheet.merge_range(cur_row, 1, cur_row + 1, 1, _('Description'), merge_format)
     worksheet.merge_range(cur_row, 2, cur_row + 1, 2, _('Upgrade?'), merge_format)
     worksheet.merge_range(cur_row, 3, cur_row + 1, 3, _('Receipt'), merge_format)
-    worksheet.merge_range(cur_row, 4, cur_row + 1, 4, _('Amount'), merge_format)
+    worksheet.merge_range(cur_row, 4, cur_row + 1, 4, _('Total Amount'), merge_format)
 
     cur_row += 1
     for expense in expense_dict:

@@ -44,8 +44,8 @@ msgid "Upgrade?"
 msgstr "שדרוג?"
 
 #: excel.py:82
-msgid "Amount"
-msgstr "סכום"
+msgid "Total Amount"
+msgstr "סכום כולל"
 
 #: excel.py:128
 msgid "No"
