@@ -11,3 +11,4 @@ expenses_list_limit = 50000
 
 ignore_old_remarks = False
 skip_completed = True
+print_is_upgrade = False

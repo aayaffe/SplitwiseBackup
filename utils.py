@@ -7,6 +7,7 @@ import urllib
 from pathlib import Path
 
 import dateutil
+from dateutil import parser
 import prompt_toolkit
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.completion import WordCompleter, FuzzyWordCompleter
