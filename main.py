@@ -27,6 +27,8 @@ def expenses_to_json(expenses):
                 json.dumps(comments, default=lambda o: o.__dict__, ensure_ascii=False))
         if expense.receipt.original and config.download_images_pdf:
             utils.image_downloader([expense.receipt.original], config.receipts_dir, overwrite=False)
+        if js['creation_method'] == 'reimbursement':
+            js['cost'] = -1 * float(js['cost'])
         print(js)
         expenses_array.append(js)
     json_out = {'expenses': expenses_array, 'members': members_array}
