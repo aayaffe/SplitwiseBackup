@@ -31,6 +31,7 @@ def json2dict(jsonfile):
         ret[i]['details'] = expense['details']
         ret[i]['receipt'] = expense['receipt']['original']
         ret[i]['currency_code'] = expense['currency_code']
+        ret[i]['category'] = expense['category']['name']
         if 'filename' in expense:
             ret[i]['filename'] = expense['filename']
         users_dict = {}
@@ -112,9 +113,9 @@ def generate_expenses_xlsx(filename, jsonfile):
     })
 
     user_dict = json2usersdict(jsonfile)
-    first_user_column = 4
+    first_user_column = 5
     if config.print_is_upgrade:
-        first_user_column = 5
+        first_user_column = 6
     cur_row = 0
     worksheet.merge_range(cur_row, 0, cur_row, first_user_column - 1 + len(user_dict) * 2,
                           worksheet_name + datetime.now().strftime(_("%d/%m/%Y")), merge_format)
@@ -138,6 +139,8 @@ def generate_expenses_xlsx(filename, jsonfile):
     if config.print_is_upgrade:
         worksheet.merge_range(cur_row, colum, cur_row + 1, colum, _('Upgrade?'), merge_format)
         colum += 1
+    worksheet.merge_range(cur_row, colum, cur_row + 1, colum, _('Category'), merge_format)
+    colum += 1
     worksheet.merge_range(cur_row, colum, cur_row + 1, colum, _('Receipt'), merge_format)
     colum += 1
     worksheet.merge_range(cur_row, colum, cur_row + 1, colum, _('Total Amount'), merge_format)
@@ -156,6 +159,12 @@ def generate_expenses_xlsx(filename, jsonfile):
             except Exception:
                 upgrade = _('No')
             worksheet.write(cur_row, 2, upgrade, cell_format)
+        try:
+            details = json.loads(expense_dict[expense]['details'])
+            category = details['category']
+        except Exception:
+            category = expense_dict[expense]['category']
+        worksheet.write(cur_row, 3, category, cell_format)
         receipt_file = ''
         if 'filename' in expense_dict[expense]:
             receipt_file = expense_dict[expense]['filename']
